@@ -9,6 +9,14 @@ import (
 	js "github.com/dop251/goja"
 )
 
+func (r *RequireModule) DeleteModule(path string) {
+	delete(r.modules, path)
+}
+func (r *Registry) DeleteModule(p string) {
+	r.Lock()
+	defer r.Unlock()
+	delete(r.compiled, p)
+}
 // NodeJS module search algorithm described by
 // https://nodejs.org/api/modules.html#modules_all_together
 func (r *RequireModule) resolve(modpath string) (module *js.Object, err error) {
